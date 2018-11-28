@@ -12,7 +12,7 @@ typedef struct Tuples {
 	size_t len;
 } Tuple;
 
-Tree tree;
+Tree * tree;
 
 /* Prototypes for Functions */
 

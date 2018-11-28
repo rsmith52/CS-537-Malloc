@@ -4,9 +4,24 @@
 /* Include Guards ^^^ */
 /* Prototypes for Variables */
 
+typedef struct TreeNodes {
+	int data;
+	char color;
+	void *  parent;
+	void * children;
+} TreeNode;
+
+
 typedef struct Trees {
-	int * tempDataList;
+	TreeNode * tempDataList;
 } Tree;
 
 /* Prototypes for Functions */
+
+Tree * createTree();
+
+int addToTree(int data);
+
+int removeFromTree(int data);
+
 #endif
