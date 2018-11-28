@@ -4,5 +4,9 @@
 /* Include Guards ^^^ */
 /* Prototypes for Variables */
 
+typedef struct Trees {
+	int * tempDataList;
+} Tree;
 
+/* Prototypes for Functions */
 #endif
