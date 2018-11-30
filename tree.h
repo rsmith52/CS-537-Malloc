@@ -5,23 +5,25 @@
 /* Prototypes for Variables */
 
 typedef struct TreeNodes {
-	int data;
+	void * data;
 	char color;
-	void *  parent;
-	void * children;
+	struct TreeNode * parent;
+	struct TreeNode * leftChild;
+	struct TreeNode * rightChild;
 } TreeNode;
 
 
 typedef struct Trees {
-	TreeNode * tempDataList;
+	TreeNode * root;
+	TreeNode * DataList;
 } Tree;
 
 /* Prototypes for Functions */
 
 Tree * createTree();
 
-int addToTree(int data);
+int addToTree(void * data);
 
-int removeFromTree(int data);
+TreeNode * removeFromTree(void * data);
 
 #endif
