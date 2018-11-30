@@ -15,15 +15,23 @@ typedef struct TreeNodes {
 
 typedef struct Trees {
 	TreeNode * root;
-	TreeNode * DataList;
+	int size;
 } Tree;
 
 /* Prototypes for Functions */
 
-Tree * createTree();
+Tree * createTree(void * data);
 
-int addToTree(void * data);
+int addToTree(Tree * tree, void * data);
 
-TreeNode * removeFromTree(void * data);
+TreeNode * removeFromTree(Tree * tree, void * data);
+
+void rotateLeft(Tree * tree, TreeNode * topNode, TreeNode * node);
+
+void rotateRight(Tree * tree, TreeNode * topNode, TreeNode * node);
+
+void printTree(Tree * tree);
+
+void printTreeHelper(Tree * tree, TreeNode * node);
 
 #endif

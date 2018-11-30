@@ -3,8 +3,16 @@
 #include "tree.h"
 
 int main () {
+
+	printf("Hello World!\n");
+
+	Tuple * data = malloc(sizeof(Tuple));
+	data->addr = 1;
+	data->len = 0;	
 	
-	createTree();
+	Tree * tree = createTree(data);
+
+	printTree(tree);
 
 	return -1;
 }
