@@ -8,14 +8,14 @@ SCAN_BUILD_DIR = scan-build-out
 $(EXE): main.o 537malloc.o tree.o
 	$(CC) -g -o $(EXE) main.o 537malloc.o tree.o
 
-main.o: main.c
-	$(CC) -g $(WARNING_FLAGS) -c main.c
+main.o: main.c main.h 537malloc.h tree.h
+	$(CC) -g $(WARNING_FLAGS) -c main.c main.h
 
 537malloc.o: 537malloc.c 537malloc.h
-	$(CC) -g $(WARNING_FLAGS) -c 537malloc.c 537malloc.h
+	$(CC) -g $(WARNING_FLAGS) -c 537malloc.c
 
 tree.o: tree.c tree.h
-	$(CC) -g $(WARNING_FLAGS) -c tree.c tree.h
+	$(CC) -g $(WARNING_FLAGS) -c tree.c
 
 # the -f flag for rm ensures that clean doesn't fail if file to be deleted doesn't exist
 clean:

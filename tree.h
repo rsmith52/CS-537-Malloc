@@ -7,13 +7,15 @@
 typedef struct TreeNodes {
 	int data;
 	char color;
-	void *  parent;
-	void * children;
+	TreeNode parent;
+	TreeNode leftChild;
+	TreeNode rightChild;
 } TreeNode;
 
 
 typedef struct Trees {
-	TreeNode * tempDataList;
+	TreeNode root;
+	TreeNode* tempDataList;
 } Tree;
 
 /* Prototypes for Functions */
@@ -22,6 +24,6 @@ Tree * createTree();
 
 int addToTree(int data);
 
-int removeFromTree(int data);
+TreeNode *removeFromTree(int data);
 
 #endif

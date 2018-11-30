@@ -3,6 +3,9 @@
 #include <stdio.h>
 
 void * malloc537(size_t size) {
+	if (size < 1) {
+		return NULL;
+	}
 
 	return NULL;
 }
