@@ -4,13 +4,15 @@
 /* Include Guards ^^^ */
 /* Prototypes for Variables */
 
-typedef struct TreeNodes {
+typedef struct TreeNode TreeNode;
+
+struct TreeNode {
 	void * data;
 	char color;
-	struct TreeNode * parent;
-	struct TreeNode * leftChild;
-	struct TreeNode * rightChild;
-} TreeNode;
+	TreeNode * parent;
+	TreeNode * leftChild;
+	TreeNode * rightChild;
+};
 
 
 typedef struct Trees {
@@ -29,6 +31,8 @@ TreeNode * removeFromTree(Tree * tree, void * data);
 void rotateLeft(Tree * tree, TreeNode * topNode, TreeNode * node);
 
 void rotateRight(Tree * tree, TreeNode * topNode, TreeNode * node);
+
+void fixViolation(Tree * tree, TreeNode * root, TreeNode * node);
 
 void printTree(Tree * tree);
 

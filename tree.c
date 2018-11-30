@@ -5,7 +5,7 @@
 #include "tree.h"
 
 Tree * createTree(void * data) {
-	TreeNode * root = malloc(sizeof(TreeNode));
+	TreeNode * root = malloc(sizeof(struct TreeNode));
 	root->data = data;
 	root->color = 'b';
 	root->parent = NULL;
@@ -27,6 +27,16 @@ int addToTree(Tree * tree, void * data) {
 TreeNode * removeFromTree(Tree * tree, void * data) {
 
 	return NULL;
+}
+
+void fixViolation(Tree * tree, TreeNode * root, TreeNode * node) {
+	TreeNode * parent = NULL;
+	TreeNode * grandParent = NULL;
+
+	while ((node != root) && (node->color != 'b') && (node->parent->color == 'r')) {
+		parent = node->parent;
+		grandParent = parent->parent;
+	}		
 }
 
 void printTree(Tree * tree) {
