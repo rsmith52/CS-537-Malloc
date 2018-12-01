@@ -28,9 +28,9 @@ int addToTree(Tree * tree, void * data);
 
 TreeNode * removeFromTree(Tree * tree, void * data);
 
-void rotateLeft(Tree * tree, TreeNode * topNode, TreeNode * node);
+void rotateLeft(Tree * tree, TreeNode * root, TreeNode * node);
 
-void rotateRight(Tree * tree, TreeNode * topNode, TreeNode * node);
+void rotateRight(Tree * tree, TreeNode * root, TreeNode * node);
 
 void fixViolation(Tree * tree, TreeNode * root, TreeNode * node);
 
