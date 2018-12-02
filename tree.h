@@ -2,18 +2,24 @@
 #ifndef TREE_H_INCLUDED
 #define TREE_H_INCLUDED
 /* Include Guards ^^^ */
+#include <stdlib.h>
+#include <stdio.h>
 /* Prototypes for Variables */
+
+typedef struct Tuples {
+        int addr;
+        size_t len;
+} Tuple;
 
 typedef struct TreeNode TreeNode;
 
 struct TreeNode {
-	void * data;
+	Tuple * data;
 	char color;
 	TreeNode * parent;
 	TreeNode * leftChild;
 	TreeNode * rightChild;
 };
-
 
 typedef struct Trees {
 	TreeNode * root;
@@ -24,18 +30,20 @@ typedef struct Trees {
 
 Tree * createTree(void * data);
 
-int addToTree(Tree * tree, void * data);
+void * BSTInsert(TreeNode * root, TreeNode * newNode);
+
+void addToTree(Tree * tree, void * data);
 
 TreeNode * removeFromTree(Tree * tree, void * data);
 
-void rotateLeft(Tree * tree, TreeNode * root, TreeNode * node);
+void rotateLeft(Tree * tree, TreeNode * data);
 
-void rotateRight(Tree * tree, TreeNode * root, TreeNode * node);
+void rotateRight(Tree * tree, TreeNode * data);
 
-void fixViolation(Tree * tree, TreeNode * root, TreeNode * node);
+void fixViolation(Tree * tree, TreeNode * node);
 
 void printTree(Tree * tree);
 
-void printTreeHelper(Tree * tree, TreeNode * node);
+void printTreeHelper(TreeNode * node);
 
 #endif

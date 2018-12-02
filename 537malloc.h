@@ -7,11 +7,6 @@
 #include "tree.h"
 /* Prototypes for Variables */
 
-typedef struct Tuples {
-	int addr;
-	size_t len;
-} Tuple;
-
 Tree * tree;
 
 /* Prototypes for Functions */
