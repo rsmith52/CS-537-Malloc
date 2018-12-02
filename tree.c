@@ -4,22 +4,18 @@
 #include "537malloc.h"
 #include "tree.h"
 
-Tree * createTree(void * data) {
-	TreeNode * root = malloc(sizeof(struct TreeNode));
-	root->data = data;
-	root->color = 'b';
-	root->parent = NULL;
-	root->leftChild = NULL;
-	root->rightChild = NULL;
-
+Tree * createTree() {
 	Tree * tree = malloc(sizeof(Tree));
-	tree->root = root;
-	tree->size = 1;
+	tree->root = NULL;
+	tree->size = 0;
 
 	return tree;
 }
 
 void * BSTInsert(TreeNode * root, TreeNode * newNode) {
+	if (root == NULL) {
+		return newNode;
+	}
 	if (root->data->addr > newNode->data->addr) {
 		if (root->leftChild != NULL) {
 			root->leftChild = BSTInsert(root->leftChild, newNode);
@@ -52,7 +48,7 @@ void addToTree(Tree * tree, void * data) {
 	tree->root = BSTInsert(tree->root, newNode);
 	
 	// Maintain Red-Black Tree Properties
-	// fixViolation(tree, newNode);
+	fixViolation(tree, newNode);
 
 	// Update Tree Size	
 	tree->size++;
@@ -176,12 +172,16 @@ void fixViolation(Tree * tree, TreeNode * node) {
 }
 
 void printTree(Tree * tree) {
-	if (tree->root->leftChild != NULL) {
-		printTreeHelper(tree->root->leftChild);
-	}
-	printf("%d is a %c node\n", tree->root->data->addr, tree->root->color);	
-	if (tree->root->rightChild != NULL) {
-		printTreeHelper(tree->root->rightChild);
+	if (tree->root == NULL) {
+		printf("Empty Tree\n");
+	} else {
+		if (tree->root->leftChild != NULL) {
+			printTreeHelper(tree->root->leftChild);
+		}	
+		printf("%d is a %c root node\n", tree->root->data->addr, tree->root->color);	
+		if (tree->root->rightChild != NULL) {
+			printTreeHelper(tree->root->rightChild);
+		}
 	}
 }
 

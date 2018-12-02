@@ -28,7 +28,7 @@ typedef struct Trees {
 
 /* Prototypes for Functions */
 
-Tree * createTree(void * data);
+Tree * createTree();
 
 void * BSTInsert(TreeNode * root, TreeNode * newNode);
 
