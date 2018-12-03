@@ -32,11 +32,7 @@ Tree * createTree();
 
 void * BSTInsert(TreeNode * root, TreeNode * newNode);
 
-void addToTree(Tree * tree, void * data);
-
-void rotateLeft(Tree * tree, TreeNode * data);
-
-void rotateRight(Tree * tree, TreeNode * data);
+void addToTree(Tree * tree, Tuple * data);
 
 void fixViolation(Tree * tree, TreeNode * node);
 
@@ -48,11 +44,19 @@ TreeNode * getNoLeftChildNode(TreeNode * node);
 
 TreeNode * getSibling(TreeNode * node);
 
+int hasRedChild(TreeNode * node);
+
+int leftChildRed(TreeNode * node);
+
 TreeNode * BSTReplace(TreeNode * node);
 
 void deleteNode(Tree * tree, TreeNode * node);
 
 void fixDoubleBlack(Tree * tree, TreeNode * node);
+
+TreeNode * BSByValue(Tree * tree, Tuple * value);
+
+void deleteByValue(Tree * tree, Tuple * value);
 
 void printTree(Tree * tree);
 

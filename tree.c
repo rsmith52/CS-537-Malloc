@@ -34,7 +34,7 @@ void * BSTInsert(TreeNode * root, TreeNode * newNode) {
 	return root;
 }
 
-void addToTree(Tree * tree, void * data) {
+void addToTree(Tree * tree, Tuple * data) {
 	
 	// Create new TreeNode for insertion
 	TreeNode * newNode = malloc(sizeof(struct TreeNode));
@@ -49,55 +49,9 @@ void addToTree(Tree * tree, void * data) {
 	
 	// Maintain Red-Black Tree Properties
 	fixViolation(tree, newNode);
-
+	
 	// Update Tree Size	
 	tree->size++;
-}
-
-void rotateLeft(Tree * tree, TreeNode * data) {
-	TreeNode * right = data->rightChild;
-
-	data->rightChild = right->leftChild;
-
-	if (data->rightChild != NULL) {
-		data->rightChild->parent = data;
-	}
-
-	right->parent = data->parent;
-
-	if (data->parent == NULL) {
-		tree->root = right;
-	} else if (data == data->parent->leftChild) {
-		data->parent->leftChild = right;
-	} else {
-		data->parent->rightChild = right;
-	}
-
-	right->leftChild = data;
-	data->parent = right;
-}
-
-void rotateRight(Tree * tree, TreeNode * data) {
-	TreeNode * left = data->leftChild;
-
-	data->leftChild = left->rightChild;
-
-	if (data->leftChild != NULL) {
-		data->leftChild->parent = data;
-	}
-
-	left->leftChild->parent = data->parent;
-
-	if (data->parent == NULL) {
-		tree->root = left;
-	} else if (data == data->parent->leftChild) {
-		data->parent->leftChild = left;
-	} else {
-		data->parent->rightChild = left;
-	}
-
-	left->rightChild = data;
-	data->parent = left;
 }
 
 void fixViolation(Tree * tree, TreeNode * node) {
@@ -107,7 +61,6 @@ void fixViolation(Tree * tree, TreeNode * node) {
 	while ((node != tree->root) && (node->color != 'b') && (node->parent->color == 'r')) {
 		parent = node->parent;
 		grandParent = parent->parent;
-
 		// Case: Parent of node is left child of grand-parent of node
 		if (parent == grandParent->leftChild) {
 			TreeNode * uncle = grandParent->rightChild;
@@ -122,13 +75,13 @@ void fixViolation(Tree * tree, TreeNode * node) {
 				// Case: node is right child of its parent
 				// Left Rotation is needed
 				if (node == parent->rightChild) {
-					rotateLeft(tree, parent);
+					removeRotateLeft(tree, parent);
 					node = parent;
 					parent = node->parent;
 				}
 				// Case: node is left child of its parent
 				// Right Rotation is needed
-				rotateRight(tree, grandParent);
+				removeRotateRight(tree, grandParent);
 				char tempColor = parent->color;
 				parent->color = grandParent->color;
 				grandParent->color = tempColor;
@@ -149,13 +102,13 @@ void fixViolation(Tree * tree, TreeNode * node) {
 				// Case: node is left child of its parent
 				// Right Rotation is needed
 				if (node == parent->leftChild) {
-					rotateRight(tree, parent);
+					removeRotateRight(tree, parent);
 					node = parent;
 					parent = node->parent;
 				}
 				// Case: node is right child of its parent
 				// Left Rotation is needed
-				rotateLeft(tree, grandParent);
+				removeRotateLeft(tree, grandParent);
 				char tempColor = parent->color;
 				parent->color = grandParent->color;
 				grandParent->color = tempColor;
@@ -231,6 +184,28 @@ TreeNode * getSibling(TreeNode * node) {
 	} else {
 		return node->parent->leftChild;
 	}
+}
+
+int hasRedChild(TreeNode * node) {
+	if (node->leftChild != NULL) {
+		if (node->leftChild->color == 'r') {
+			return 1;
+		}
+	} else if (node->rightChild != NULL) {
+		if (node->rightChild->color == 'r') {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int leftChildRed(TreeNode * node) {
+	if (node->leftChild != NULL) {
+		if (node->leftChild->color == 'r') {
+			return 1;
+		}
+	}
+	return 0;
 }
 
 TreeNode * BSTReplace(TreeNode * node) {
@@ -336,9 +311,79 @@ void fixDoubleBlack(Tree * tree, TreeNode * node) {
 				removeRotateLeft(tree, parent);
 			}
 			fixDoubleBlack(tree, parent);
+		} else {
+			if (hasRedChild(sibling)) {
+				if (leftChildRed(sibling)) {
+					if (sibling->parent->leftChild == sibling) {
+						sibling->leftChild->color = sibling->color;
+						sibling->color = parent->color;
+						removeRotateRight(tree, parent);
+					} else {
+						sibling->leftChild->color = parent->color;
+						removeRotateRight(tree, sibling);
+						removeRotateLeft(tree, parent);
+					}
+				} else {
+					if (sibling->parent->leftChild == sibling) {
+						sibling->rightChild->color = parent->color;
+						removeRotateLeft(tree, sibling);
+						removeRotateRight(tree, parent);
+					} else {
+						sibling->rightChild->color = sibling->color;
+						sibling->color = parent->color;
+						removeRotateLeft(tree, parent);
+					}
+				}
+				parent->color = 'b';
+			} else {
+				sibling->color = 'r';
+				if (parent->color == 'b') {
+					fixDoubleBlack(tree, parent);
+				} else {
+					parent->color = 'b';
+				}
+			}
 		}
 	}
 
+}
+
+TreeNode * BSByValue(Tree * tree, Tuple * value) {
+	TreeNode * temp = tree->root;
+	while (temp != NULL) {
+		if (value->addr < temp->data->addr) {
+			if (temp->leftChild == NULL) {
+				return NULL;
+			} else {
+				temp = temp->leftChild;
+			}
+		} else if (value->addr == temp->data->addr) {
+			break;
+		} else {
+			if (temp->rightChild == NULL) {
+				return NULL;
+			} else {
+				temp = temp->rightChild;
+			}
+		}
+	}
+	return temp;
+
+}
+
+void deleteNodeByValue(Tree * tree, Tuple * value) {
+	if (tree->root == NULL) {
+		return;
+	}
+
+	TreeNode * matchingNode = BSByValue(tree, value);
+	
+	if (matchingNode == NULL) {
+		fprintf(stderr, "No node with that value found to delete\n");
+		return;
+	}
+
+	deleteNode(tree, matchingNode);
 }
 
 void printTree(Tree * tree) {
@@ -353,6 +398,7 @@ void printTree(Tree * tree) {
 			printTreeHelper(tree->root->rightChild);
 		}
 	}
+	printf("\n");
 }
 
 void printTreeHelper(TreeNode * node) {

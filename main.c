@@ -10,12 +10,36 @@ int main () {
 	Tuple ** tuples = malloc(sizeof(Tuple*) * 50);
 	for (int i = 0; i < 50; i++) {
 		tuples[i] = malloc(sizeof(Tuple));
-		tuples[i]->addr = i;
 		tuples[i]->len = 0;
-		addToTree(tree, tuples[i]);
-		printTree(tree);
-		printf("\n");
 	}
+
+	tuples[0]->addr = 0;
+	tuples[1]->addr = 1;
+	tuples[2]->addr = 2;
+	tuples[3]->addr = 3;
+	tuples[4]->addr = 4;
+	tuples[5]->addr = 5;
+	tuples[6]->addr = 6;
+	tuples[7]->addr = 7;
+	tuples[8]->addr = 8;
+
+	addToTree(tree, tuples[0]);
+	printTree(tree);
+	addToTree(tree, tuples[2]);
+	printTree(tree);
+	addToTree(tree, tuples[1]);
+	printTree(tree);
+	addToTree(tree, tuples[4]);
+	printTree(tree);
+	addToTree(tree, tuples[5]);
+	printTree(tree);
+	addToTree(tree, tuples[6]);
+	printTree(tree);
+	addToTree(tree, tuples[7]);
+	printTree(tree);
+	addToTree(tree, tuples[8]);
+
+	printTree(tree);
 
 	return -1;
 }
