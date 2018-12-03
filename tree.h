@@ -34,13 +34,25 @@ void * BSTInsert(TreeNode * root, TreeNode * newNode);
 
 void addToTree(Tree * tree, void * data);
 
-TreeNode * removeFromTree(Tree * tree, void * data);
-
 void rotateLeft(Tree * tree, TreeNode * data);
 
 void rotateRight(Tree * tree, TreeNode * data);
 
 void fixViolation(Tree * tree, TreeNode * node);
+
+void removeRotateLeft(Tree * tree, TreeNode * node);
+
+void removeRotateRight(Tree * tree, TreeNode * node);
+
+TreeNode * getNoLeftChildNode(TreeNode * node);
+
+TreeNode * getSibling(TreeNode * node);
+
+TreeNode * BSTReplace(TreeNode * node);
+
+void deleteNode(Tree * tree, TreeNode * node);
+
+void fixDoubleBlack(Tree * tree, TreeNode * node);
 
 void printTree(Tree * tree);
 

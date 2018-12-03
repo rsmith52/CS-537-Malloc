@@ -7,8 +7,8 @@ int main () {
 	printf("Hello World!\n");	
 	Tree * tree = createTree();
 
-	Tuple ** tuples = malloc(sizeof(Tuple*) * 10);
-	for (int i = 0; i < 10; i++) {
+	Tuple ** tuples = malloc(sizeof(Tuple*) * 50);
+	for (int i = 0; i < 50; i++) {
 		tuples[i] = malloc(sizeof(Tuple));
 		tuples[i]->addr = i;
 		tuples[i]->len = 0;

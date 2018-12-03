@@ -54,11 +54,6 @@ void addToTree(Tree * tree, void * data) {
 	tree->size++;
 }
 
-TreeNode * removeFromTree(Tree * tree, void * data) {
-
-	return NULL;
-}
-
 void rotateLeft(Tree * tree, TreeNode * data) {
 	TreeNode * right = data->rightChild;
 
@@ -83,7 +78,7 @@ void rotateLeft(Tree * tree, TreeNode * data) {
 }
 
 void rotateRight(Tree * tree, TreeNode * data) {
-	TreeNode *left = data->leftChild;
+	TreeNode * left = data->leftChild;
 
 	data->leftChild = left->rightChild;
 
@@ -169,6 +164,181 @@ void fixViolation(Tree * tree, TreeNode * node) {
 		}
 	}	
 	tree->root->color = 'b';	
+}
+
+void removeRotateLeft(Tree * tree, TreeNode * node) {
+	TreeNode * newParent = node->rightChild;
+	if (node == tree->root) {
+		tree->root = newParent;
+	}
+	// Move Node down
+	if (node->parent != NULL) {
+		// If is left child of its parent
+		if (node->parent->leftChild == node) {
+			node->parent->leftChild = newParent;
+		} else {
+			node->parent->rightChild = newParent;
+		}
+	}
+	newParent->parent = node->parent;
+	node->parent = newParent;
+
+	node->rightChild = newParent->leftChild;
+	if (newParent->leftChild != NULL) {
+		newParent->leftChild->parent = node;
+	}
+	newParent->leftChild = node;
+}
+
+void removeRotateRight(Tree * tree, TreeNode * node) {
+	TreeNode * newParent = node->leftChild;
+	if (node == tree->root) {
+		tree->root = newParent;
+	}
+	// Move Node down
+	if (node->parent != NULL) {
+		// If it is the left child of its parent
+		if (node->parent->leftChild == node) {
+			node->parent->leftChild = newParent;
+		} else {
+			node->parent->rightChild = newParent;
+		}
+	}
+	newParent->parent = node->parent;
+	node->parent = newParent;
+
+	node->leftChild = newParent->rightChild;
+	if (newParent->rightChild != NULL) {
+		newParent->rightChild->parent = node;
+	}
+	newParent->rightChild = node;
+}
+
+TreeNode * getNoLeftChildNode(TreeNode * node) {
+	TreeNode * temp = node;
+	while (temp->leftChild != NULL) {
+		temp = temp->leftChild;
+	}
+	return temp;
+}
+
+TreeNode * getSibling(TreeNode * node) {
+	if (node->parent == NULL) {
+		return NULL;
+	}
+	if (node->parent->leftChild == node) {
+		return node->parent->rightChild;
+	} else {
+		return node->parent->leftChild;
+	}
+}
+
+TreeNode * BSTReplace(TreeNode * node) {
+	// 2 Children
+	if (node->leftChild != NULL && node->rightChild != NULL) {
+		return getNoLeftChildNode(node->rightChild);
+	}
+
+	// Is Leaf
+	if (node->leftChild == NULL && node->rightChild == NULL) {
+		return NULL;
+	}
+
+	// Single Child
+	if (node->leftChild != NULL) {
+		return node->leftChild;
+	} else {
+		return node->rightChild;
+	}
+}
+
+void deleteNode(Tree * tree, TreeNode * node) {
+	TreeNode * node2 = BSTReplace(node);
+
+	int nodesBothBlack;
+	if ((node2 == NULL || node2->color == 'b') && (node->color == 'b')) {
+		nodesBothBlack = 1;
+	} else {
+		nodesBothBlack = 0;
+	}
+
+	TreeNode * parent = node->parent;
+
+	if (node2 == NULL) {
+		if (node == tree->root) {
+			tree->root = NULL;
+		} else {
+			if (nodesBothBlack) {
+				fixDoubleBlack(tree, node);
+			} else {
+				if (getSibling(node) != NULL) {
+					getSibling(node)->color = 'r';
+				}
+			}
+			if (node->parent->leftChild == node) {
+				parent->leftChild = NULL;
+			} else {
+				parent->rightChild = NULL;
+			}
+		}
+		free(node);
+		node = NULL;
+		return;
+	}
+	if (node->leftChild == NULL || node->rightChild == NULL) {
+		if (node == tree->root) {
+			node->data = node2->data;
+			node->leftChild = NULL;
+			node->rightChild = NULL;
+			free(node2);
+			node2 = NULL;
+		} else {
+			if (node->parent->leftChild == node) {
+				parent->leftChild = node2;
+			} else  {
+				parent->rightChild = node2;
+			}
+			free(node);
+			node = NULL;
+			node2->parent = parent;
+			if (nodesBothBlack) {
+				fixDoubleBlack(tree, node2);
+			} else {
+				node2->color = 'b';
+			}
+		}
+		return;
+	}
+	Tuple * temp = node->data;
+	node->data = node2->data;
+	node2->data = temp;
+	deleteNode(tree, node2);
+}
+
+void fixDoubleBlack(Tree * tree, TreeNode * node) {
+	// Reached root and done
+	if (node == tree->root) {
+		return;
+	}
+
+	TreeNode * sibling = getSibling(node);
+	TreeNode * parent = node->parent;
+
+	if (sibling == NULL) {
+		fixDoubleBlack(tree, parent);
+	} else {
+		if (sibling->color == 'r') {
+			parent->color = 'r';
+			sibling->color = 'b';
+			if (node->parent->leftChild == node) {
+				removeRotateRight(tree, parent);
+			} else {
+				removeRotateLeft(tree, parent);
+			}
+			fixDoubleBlack(tree, parent);
+		}
+	}
+
 }
 
 void printTree(Tree * tree) {
