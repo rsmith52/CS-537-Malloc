@@ -36,9 +36,9 @@ void addToTree(Tree * tree, Tuple * data);
 
 void fixViolation(Tree * tree, TreeNode * node);
 
-void removeRotateLeft(Tree * tree, TreeNode * node);
+void RotateLeft(Tree * tree, TreeNode * node);
 
-void removeRotateRight(Tree * tree, TreeNode * node);
+void RotateRight(Tree * tree, TreeNode * node);
 
 TreeNode * getNoLeftChildNode(TreeNode * node);
 
@@ -56,7 +56,7 @@ void fixDoubleBlack(Tree * tree, TreeNode * node);
 
 TreeNode * BSByValue(Tree * tree, Tuple * value);
 
-void deleteByValue(Tree * tree, Tuple * value);
+void deleteNodeByValue(Tree * tree, Tuple * value);
 
 void printTree(Tree * tree);
 

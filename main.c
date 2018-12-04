@@ -38,7 +38,13 @@ int main () {
 	addToTree(tree, tuples[7]);
 	printTree(tree);
 	addToTree(tree, tuples[8]);
+	printTree(tree);
 
+	deleteNodeByValue(tree, tuples[2]);
+	printTree(tree);
+	deleteNodeByValue(tree, tuples[8]);
+	printTree(tree);
+	deleteNodeByValue(tree, tuples[4]);
 	printTree(tree);
 
 	return -1;

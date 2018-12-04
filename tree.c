@@ -75,13 +75,13 @@ void fixViolation(Tree * tree, TreeNode * node) {
 				// Case: node is right child of its parent
 				// Left Rotation is needed
 				if (node == parent->rightChild) {
-					removeRotateLeft(tree, parent);
+					RotateLeft(tree, parent);
 					node = parent;
 					parent = node->parent;
 				}
 				// Case: node is left child of its parent
 				// Right Rotation is needed
-				removeRotateRight(tree, grandParent);
+				RotateRight(tree, grandParent);
 				char tempColor = parent->color;
 				parent->color = grandParent->color;
 				grandParent->color = tempColor;
@@ -102,13 +102,13 @@ void fixViolation(Tree * tree, TreeNode * node) {
 				// Case: node is left child of its parent
 				// Right Rotation is needed
 				if (node == parent->leftChild) {
-					removeRotateRight(tree, parent);
+					RotateRight(tree, parent);
 					node = parent;
 					parent = node->parent;
 				}
 				// Case: node is right child of its parent
 				// Left Rotation is needed
-				removeRotateLeft(tree, grandParent);
+				RotateLeft(tree, grandParent);
 				char tempColor = parent->color;
 				parent->color = grandParent->color;
 				grandParent->color = tempColor;
@@ -119,7 +119,7 @@ void fixViolation(Tree * tree, TreeNode * node) {
 	tree->root->color = 'b';	
 }
 
-void removeRotateLeft(Tree * tree, TreeNode * node) {
+void RotateLeft(Tree * tree, TreeNode * node) {
 	TreeNode * newParent = node->rightChild;
 	if (node == tree->root) {
 		tree->root = newParent;
@@ -143,7 +143,7 @@ void removeRotateLeft(Tree * tree, TreeNode * node) {
 	newParent->leftChild = node;
 }
 
-void removeRotateRight(Tree * tree, TreeNode * node) {
+void RotateRight(Tree * tree, TreeNode * node) {
 	TreeNode * newParent = node->leftChild;
 	if (node == tree->root) {
 		tree->root = newParent;
@@ -306,9 +306,9 @@ void fixDoubleBlack(Tree * tree, TreeNode * node) {
 			parent->color = 'r';
 			sibling->color = 'b';
 			if (node->parent->leftChild == node) {
-				removeRotateRight(tree, parent);
+				RotateRight(tree, parent);
 			} else {
-				removeRotateLeft(tree, parent);
+				RotateLeft(tree, parent);
 			}
 			fixDoubleBlack(tree, parent);
 		} else {
@@ -317,21 +317,21 @@ void fixDoubleBlack(Tree * tree, TreeNode * node) {
 					if (sibling->parent->leftChild == sibling) {
 						sibling->leftChild->color = sibling->color;
 						sibling->color = parent->color;
-						removeRotateRight(tree, parent);
+						RotateRight(tree, parent);
 					} else {
 						sibling->leftChild->color = parent->color;
-						removeRotateRight(tree, sibling);
-						removeRotateLeft(tree, parent);
+						RotateRight(tree, sibling);
+						RotateLeft(tree, parent);
 					}
 				} else {
 					if (sibling->parent->leftChild == sibling) {
 						sibling->rightChild->color = parent->color;
-						removeRotateLeft(tree, sibling);
-						removeRotateRight(tree, parent);
+						RotateLeft(tree, sibling);
+						RotateRight(tree, parent);
 					} else {
 						sibling->rightChild->color = sibling->color;
 						sibling->color = parent->color;
-						removeRotateLeft(tree, parent);
+						RotateLeft(tree, parent);
 					}
 				}
 				parent->color = 'b';
