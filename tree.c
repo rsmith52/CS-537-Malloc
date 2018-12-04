@@ -225,6 +225,9 @@ TreeNode * BSTReplace(TreeNode * node) {
 
 void deleteNode(Tree * tree, TreeNode * node) {
 	TreeNode * node2 = BSTReplace(node);
+	if (node2 == node) {
+		node2 = NULL;
+	}
 
 	int nodesBothBlack;
 	if ((node2 == NULL || node2->color == 'b') && (node->color == 'b')) {
@@ -246,10 +249,12 @@ void deleteNode(Tree * tree, TreeNode * node) {
 					getSibling(node)->color = 'r';
 				}
 			}
-			if (node->parent->leftChild == node) {
-				parent->leftChild = NULL;
-			} else {
-				parent->rightChild = NULL;
+			if (node->parent != NULL) {
+				if (node->parent->leftChild == node) {
+					parent->leftChild = NULL;
+				} else {
+					parent->rightChild = NULL;
+				}
 			}
 		}
 		free(node);
@@ -291,10 +296,8 @@ void fixDoubleBlack(Tree * tree, TreeNode * node) {
 	if (node == tree->root) {
 		return;
 	}
-
 	TreeNode * sibling = getSibling(node);
 	TreeNode * parent = node->parent;
-
 	if (sibling == NULL) {
 		fixDoubleBlack(tree, parent);
 	} else {
@@ -371,9 +374,7 @@ void deleteNodeByValue(Tree * tree, uintptr_t value) {
 	if (tree->root == NULL) {
 		return;
 	}
-
 	TreeNode * matchingNode = BSByValue(tree, value);
-	
 	if (matchingNode == NULL) {
 		fprintf(stderr, "No node with that value found to delete\n");
 		return;
@@ -388,7 +389,7 @@ void printTree(Tree * tree) {
 	} else {
 		if (tree->root->leftChild != NULL) {
 			printTreeHelper(tree->root->leftChild);
-		}	
+		}
 		printf("%ld is a %c root node\n", tree->root->data->addr, tree->root->color);	
 		if (tree->root->rightChild != NULL) {
 			printTreeHelper(tree->root->rightChild);

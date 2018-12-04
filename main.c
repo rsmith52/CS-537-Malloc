@@ -1,11 +1,11 @@
 // Ray Smith - rsmith52 - rays - Nate Hoffman - nhoffman5 -nhoffman
+#include <stdint.h>
 #include "537malloc.h"
 #include "tree.h"
 
 int main () {
 
 	printf("Hello World!\n");	
-	/*
 	Tree * tree = createTree();
 
 	Tuple ** tuples = malloc(sizeof(Tuple*) * 50);
@@ -23,37 +23,25 @@ int main () {
 	tuples[6]->addr = 6;
 	tuples[7]->addr = 7;
 	tuples[8]->addr = 8;
+	tuples[9]->addr = 9;
+	tuples[10]->addr = 10;
 
+	addToTree(tree, tuples[1]);
+	printTree(tree);
 	addToTree(tree, tuples[0]);
 	printTree(tree);
 	addToTree(tree, tuples[2]);
 	printTree(tree);
-	addToTree(tree, tuples[1]);
+	addToTree(tree, tuples[3]);
 	printTree(tree);
 	addToTree(tree, tuples[4]);
 	printTree(tree);
-	addToTree(tree, tuples[5]);
+	
+	deleteNodeByValue(tree, 0);
 	printTree(tree);
-	addToTree(tree, tuples[6]);
+	
+	deleteNodeByValue(tree, 1);
 	printTree(tree);
-	addToTree(tree, tuples[7]);
-	printTree(tree);
-	addToTree(tree, tuples[8]);
-	printTree(tree);
-
-	deleteNodeByValue(tree, tuples[2]);
-	printTree(tree);
-	deleteNodeByValue(tree, tuples[8]);
-	printTree(tree);
-	deleteNodeByValue(tree, tuples[4]);
-	printTree(tree);
-	*/
-
-	int * test = malloc537(0);
-	int * testVar = malloc537(sizeof(int));
-	int * testVar2 = malloc537(sizeof(int));
-	Tree * tree = malloc537(sizeof(int));
-	char * string = malloc537(sizeof(char) * 100);
 
 	return -1;
 }
