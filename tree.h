@@ -4,10 +4,11 @@
 /* Include Guards ^^^ */
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 /* Prototypes for Variables */
 
 typedef struct Tuples {
-        int addr;
+        uintptr_t addr;
         size_t len;
 } Tuple;
 

@@ -7,7 +7,6 @@
 Tree * createTree() {
 	Tree * tree = malloc(sizeof(Tree));
 	tree->root = NULL;
-	tree->size = 0;
 
 	return tree;
 }
@@ -49,9 +48,6 @@ void addToTree(Tree * tree, Tuple * data) {
 	
 	// Maintain Red-Black Tree Properties
 	fixViolation(tree, newNode);
-	
-	// Update Tree Size	
-	tree->size++;
 }
 
 void fixViolation(Tree * tree, TreeNode * node) {
@@ -393,7 +389,7 @@ void printTree(Tree * tree) {
 		if (tree->root->leftChild != NULL) {
 			printTreeHelper(tree->root->leftChild);
 		}	
-		printf("%d is a %c root node\n", tree->root->data->addr, tree->root->color);	
+		printf("%ld is a %c root node\n", tree->root->data->addr, tree->root->color);	
 		if (tree->root->rightChild != NULL) {
 			printTreeHelper(tree->root->rightChild);
 		}
@@ -405,7 +401,7 @@ void printTreeHelper(TreeNode * node) {
 	if (node->leftChild != NULL) {
 		printTreeHelper(node->leftChild);
 	}
-	printf("%d is a %c node\n", node->data->addr, node->color);
+	printf("%ld is a %c node\n", node->data->addr, node->color);
 	if (node->rightChild != NULL) {
 		printTreeHelper(node->rightChild);
 	}
