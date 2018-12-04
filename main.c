@@ -49,6 +49,7 @@ int main () {
 	printTree(tree);
 	*/
 
+	int * test = malloc537(0);
 	int * testVar = malloc537(sizeof(int));
 	int * testVar2 = malloc537(sizeof(int));
 	Tree * tree = malloc537(sizeof(int));

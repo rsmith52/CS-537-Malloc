@@ -8,6 +8,11 @@ Tree * tree = NULL;
 
 void * malloc537(size_t size) {
 
+	if (size == 0) {
+		// Size 0 malloced, which is weird
+		fprintf(stderr, "Malloced size of 0, which is weird.\n");
+	} 
+	
 	if (tree == NULL) {
 		tree = createTree();
 	}
