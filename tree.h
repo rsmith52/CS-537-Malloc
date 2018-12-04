@@ -55,9 +55,9 @@ void deleteNode(Tree * tree, TreeNode * node);
 
 void fixDoubleBlack(Tree * tree, TreeNode * node);
 
-TreeNode * BSByValue(Tree * tree, Tuple * value);
+TreeNode * BSByValue(Tree * tree, uintptr_t value);
 
-void deleteNodeByValue(Tree * tree, Tuple * value);
+void deleteNodeByValue(Tree * tree, uintptr_t value);
 
 void printTree(Tree * tree);
 

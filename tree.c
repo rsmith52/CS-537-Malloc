@@ -344,16 +344,16 @@ void fixDoubleBlack(Tree * tree, TreeNode * node) {
 
 }
 
-TreeNode * BSByValue(Tree * tree, Tuple * value) {
+TreeNode * BSByValue(Tree * tree, uintptr_t value) {
 	TreeNode * temp = tree->root;
 	while (temp != NULL) {
-		if (value->addr < temp->data->addr) {
+		if (value < temp->data->addr) {
 			if (temp->leftChild == NULL) {
 				return NULL;
 			} else {
 				temp = temp->leftChild;
 			}
-		} else if (value->addr == temp->data->addr) {
+		} else if (value == temp->data->addr) {
 			break;
 		} else {
 			if (temp->rightChild == NULL) {
@@ -367,7 +367,7 @@ TreeNode * BSByValue(Tree * tree, Tuple * value) {
 
 }
 
-void deleteNodeByValue(Tree * tree, Tuple * value) {
+void deleteNodeByValue(Tree * tree, uintptr_t value) {
 	if (tree->root == NULL) {
 		return;
 	}
