@@ -39,6 +39,7 @@ void addToTree(Tree * tree, Tuple * data) {
 	TreeNode * newNode = malloc(sizeof(struct TreeNode));
 	newNode->data = data;
 	newNode->color = 'r';
+	newNode->free = 0;
 	newNode->parent = NULL;
 	newNode->leftChild = NULL;
 	newNode->rightChild = NULL;

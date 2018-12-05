@@ -6,6 +6,7 @@
 int main () {
 
 	printf("Hello World!\n");	
+	
 	Tree * tree = createTree();
 
 	Tuple ** tuples = malloc(sizeof(Tuple*) * 50);
@@ -42,6 +43,22 @@ int main () {
 	
 	deleteNodeByValue(tree, 1);
 	printTree(tree);
+	
 
+	int * test = malloc537(sizeof(int));
+	int ** test2 = malloc537(sizeof(int *));
+	char * test3 = malloc537(sizeof(char) * 20);
+
+	uintptr_t t1 = (uintptr_t) &(*test);
+	uintptr_t t2 = (uintptr_t) &(*test2);
+	uintptr_t t3 = (uintptr_t) &(*test3);
+
+	printf("%ld\n", t1);
+	printf("%ld\n", t2);
+	printf("%ld\n", t3);
+
+	t1 += 1;
+
+	printf("%ld\n", t1);
 	return -1;
 }

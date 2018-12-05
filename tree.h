@@ -17,6 +17,7 @@ typedef struct TreeNode TreeNode;
 struct TreeNode {
 	Tuple * data;
 	char color;
+	int free; // 1 if has been freed
 	TreeNode * parent;
 	TreeNode * leftChild;
 	TreeNode * rightChild;
