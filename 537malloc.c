@@ -24,7 +24,6 @@ void * malloc537(size_t size) {
 	tuple->len = size;
 
 	addToTree(tree, tuple);
-	printTree(tree);
 
 	return (void *) pt;
 }
@@ -35,34 +34,38 @@ void free537(void * ptr) {
 		freeTree = createTree();
 	}
 	
-	int * pt = (int*) ptr;
-	uintptr_t searchAddr = (uintptr_t) &(*pt);
-
-	if (BSByValue(tree, searchAddr) != NULL) {
-		// PTR was malloced by malloc537, not yet freed
-		// Remove from tree, add to freeTree
-		// Free memory
-		Tuple * removedTuple = deleteNodeByValue(tree, searchAddr);
-		addToTree(freeTree, removedTuple);
-		free(ptr);
-		printTree(tree);
-		printTree(freeTree);
-	} else if (BSByValueWithinLen(tree, searchAddr) != NULL) {
-		// Trying to free something malloced by malloc537, but not 1st byte
-		fprintf(stderr, "Attempted to free memory with pointer that is not to the 1st byte of what was allocated.\n");
-		exit(-1);
-	} else if (BSByValue(freeTree, searchAddr) != NULL) {	
-		// Trying to free something already freed by free537
-		fprintf(stderr, "Attempted to free memory that was already freed.\n");
-		exit(-1);
-	} else if (BSByValueWithinLen(freeTree, searchAddr) != NULL) {
-		// Trying to free something already freed by free537, but not 1st byte
-		fprintf(stderr, "Attempted to free memory that was already freed, but also with pointer that is not to the 1st byte of was was allocated and freed.\n");
-		exit(-1);
+	if (ptr == NULL) {
+		fprintf(stderr, "Attempted to call free on NULL pointer, doing nothing.\n");
 	} else {
-		// Trying to free something never malloced by malloc537
-		fprintf(stderr, "Attempted to free memory that was never allocated by malloc537.\n");
-		exit(-1);
+		
+
+		int * pt = (int*) ptr;
+		uintptr_t searchAddr = (uintptr_t) &(*pt);
+
+		if (BSByValue(tree, searchAddr) != NULL) {
+			// PTR was malloced by malloc537, not yet freed
+			// Remove from tree, add to freeTree
+			// Free memory
+			Tuple * removedTuple = deleteNodeByValue(tree, searchAddr);
+			addToTree(freeTree, removedTuple);
+			free(ptr);
+		} else if (BSByValueWithinLen(tree, searchAddr) != NULL) {
+			// Trying to free something malloced by malloc537, but not 1st byte
+			fprintf(stderr, "Attempted to free memory with pointer that is not to the 1st byte of what was allocated.\n");
+			exit(-1);
+		} else if (BSByValue(freeTree, searchAddr) != NULL) {	
+			// Trying to free something already freed by free537
+			fprintf(stderr, "Attempted to free memory that was already freed.\n");
+			exit(-1);
+		} else if (BSByValueWithinLen(freeTree, searchAddr) != NULL) {
+			// Trying to free something already freed by free537, but not 1st byte
+			fprintf(stderr, "Attempted to free memory that was already freed, but also with pointer that is not to the 1st byte of was was allocated and freed.\n");
+			exit(-1);
+		} else {
+			// Trying to free something never malloced by malloc537
+			fprintf(stderr, "Attempted to free memory that was never allocated by malloc537.\n");
+			exit(-1);
+		}
 	}
 }
 
@@ -87,7 +90,11 @@ void * realloc537(void * ptr, size_t size) {
 	uintptr_t searchAddr = (uintptr_t) &(*ptr2);
 	
 	Tuple * search = malloc(sizeof(Tuple));
-	search = BSByValue(tree, searchAddr)->data;
+	search = NULL;
+	TreeNode * temp	= BSByValue(tree, searchAddr);
+	if (temp != NULL) {
+		search = temp->data;
+	}
 
 	if (search == NULL) {
 		// Tried reallocing something not allocated by malloc537
@@ -128,11 +135,36 @@ void * realloc537(void * ptr, size_t size) {
 	tuple->len = size;
 
 	addToTree(tree, tuple);
-	printTree(tree);	
 
 	return (void *) pt;
 }
 
 void memcheck537(void * ptr, size_t size) {
+	if (ptr == NULL) {
+		return;
+	}
 
+	int * ptr2 = (int *) ptr;
+	uintptr_t searchAddr = (uintptr_t) &(*ptr2);
+	uintptr_t endAddr = 0;
+
+	Tuple * search = malloc(sizeof(Tuple));
+	search = NULL;
+	TreeNode * temp  = BSByValueWithinLen(tree, searchAddr);
+
+	if (temp != NULL) {
+		search = temp->data;
+		endAddr = search->addr + search->len;
+	}
+
+	if (search == NULL) {
+		fprintf(stderr, "Checked memory not fully allocated by malloc537.\n");
+		exit(-1);
+	} else if (search->len < size) {
+		fprintf(stderr, "Checked memory not fully allocated by malloc537.\n");
+		exit(-1);
+	} else if (searchAddr + size > endAddr) {
+		fprintf(stderr, "Checked memory not fully allocated by malloc537.\n");
+		exit(-1);
+	}
 }

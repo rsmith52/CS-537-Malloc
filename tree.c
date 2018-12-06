@@ -372,6 +372,9 @@ TreeNode * BSByValueWithinLen(Tree * tree, uintptr_t value) {
 }
 
 TreeNode * BSByValue(Tree * tree, uintptr_t value) {
+	if (tree == NULL) {
+		return NULL;
+	}
 	TreeNode * temp = tree->root;
 	while (temp != NULL) {
 		if (value < temp->data->addr) {
@@ -391,7 +394,6 @@ TreeNode * BSByValue(Tree * tree, uintptr_t value) {
 		}
 	}
 	return temp;
-
 }
 
 Tuple * deleteNodeByValue(Tree * tree, uintptr_t value) {

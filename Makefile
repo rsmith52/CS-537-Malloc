@@ -9,7 +9,7 @@ all: main.o 537malloc.o tree.o
 	$(CC) -o $(EXE) main.o 537malloc.o tree.o
 
 main.o: main.c
-	$(CC) -g $(WARNING_FLAGS) -c main.c
+	$(CC) -g -o main.o $(WARNING_FLAGS) -c advanced_testcase4.c
 
 obj: 537malloc.o tree.o
 
