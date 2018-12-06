@@ -8,6 +8,7 @@
 /* Prototypes for Variables */
 
 Tree * tree;
+Tree * freeTree;
 
 /* Prototypes for Functions */
 

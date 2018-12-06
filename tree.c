@@ -348,6 +348,29 @@ void fixDoubleBlack(Tree * tree, TreeNode * node) {
 
 }
 
+TreeNode * BSByValueWithinLen(Tree * tree, uintptr_t value) {
+	TreeNode * temp = tree->root;
+
+	while (temp != NULL) {
+		if (value < temp->data->addr) {
+			if (temp->leftChild == NULL) {
+				return NULL;
+			} else {
+				temp = temp->leftChild;
+			}
+		} else if (value <= temp->data->addr + temp->data->len) {
+			break;
+		} else {
+			if (temp->rightChild == NULL) {
+				return NULL;
+			} else {
+				temp = temp->rightChild;
+			}
+		}
+	}
+	return temp;
+}
+
 TreeNode * BSByValue(Tree * tree, uintptr_t value) {
 	TreeNode * temp = tree->root;
 	while (temp != NULL) {
