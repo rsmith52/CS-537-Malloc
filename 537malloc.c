@@ -34,8 +34,36 @@ void free537(void * ptr) {
 }
 
 void * realloc537(void * ptr, size_t size) {
+	if (ptr == NULL) {
+		int * pt = malloc537(size);
+		return (void *) pt;
+	}
 
-	return NULL;
+	if (size == 0) {
+		free537(ptr);
+		return NULL;
+	}
+
+	if (tree == NULL) {
+		fprintf(stderr, "Nothing has been malloced.\n");
+		exit(-1);
+	}
+
+	Tuple *search = malloc(sizeof(struct Tuple));
+	search = BSByValueWithinLen(ptr)->data;
+	
+	deleteNodeByValue(tree, search->addr);
+
+	int *pt = realloc(ptr, size);
+
+	Tuple *tuple = malloc(sizeof(struct Tuple));
+	tuple->addr = (uintptr_t) &(*pt);
+	tuple->len = size;
+
+	addToTree(tree, tuple);
+	printTree(tree);	
+
+	return (void *) pt;
 }
 
 void memcheck537(void * ptr, size_t size) {
