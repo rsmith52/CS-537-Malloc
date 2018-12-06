@@ -371,17 +371,18 @@ TreeNode * BSByValue(Tree * tree, uintptr_t value) {
 
 }
 
-void deleteNodeByValue(Tree * tree, uintptr_t value) {
+Tuple * deleteNodeByValue(Tree * tree, uintptr_t value) {
 	if (tree->root == NULL) {
-		return;
+		return NULL;
 	}
 	TreeNode * matchingNode = BSByValue(tree, value);
 	if (matchingNode == NULL) {
 		fprintf(stderr, "No node with that value found to delete\n");
-		return;
+		return NULL;
 	}
-
+	Tuple * removedNode = matchingNode->data;
 	deleteNode(tree, matchingNode);
+	return removedNode;
 }
 
 void printTree(Tree * tree) {
