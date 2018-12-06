@@ -67,5 +67,15 @@ void * realloc537(void * ptr, size_t size) {
 }
 
 void memcheck537(void * ptr, size_t size) {
+	if (ptr == NULL) {
+		return NULL;
+	}
 
+	Tuple *search = malloc(sizeof(Tuple));
+	search = BSByValue(tree, ptr)->data;
+
+	if (search->len < size) {
+		fprintf(stderr, "Detailed and informative error message\n");
+		exit(-1);
+	}
 }
