@@ -30,6 +30,8 @@ void * malloc537(size_t size) {
 
 void free537(void * ptr) {
 
+	printTree(tree);
+
 	if (freeTree == NULL) {
 		freeTree = createTree();
 	}

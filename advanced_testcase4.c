@@ -3,7 +3,7 @@
 #include <time.h>
 #include "537malloc.h"
 
-#define LIMIT 100
+#define LIMIT 10000
 #define SIZE_RANGE 100
 
 int mem_size[LIMIT];

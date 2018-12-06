@@ -1,0 +1,7 @@
+This program is a recreation of malloc, free, and realloc which checks to make sure common errors aren't made, such as double freeing, freeing incorrect pointers, etc.
+
+Ray: I wrote half the methods of the Red Black Tree, focusing on the removal of nodes, and also creating the Tree Node Structs. I also wrote Malloc and Free.
+
+Nate: I wrote half the methods of the Red Black Tree, focusing on the traversal of the tree, and rotations needed to keep the tree even. I also wrote realloc and Memcheck.
+
+This was compiled and tested on ROYAL-30 
